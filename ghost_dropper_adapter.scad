@@ -10,16 +10,16 @@ insertBulgeRadius=5;
 insertBulgeX=0.25; // left and right (relative to the bike seat post)
 insertBulgeY=0.25; // top and bottom (relative to the bike seat post)
 
-cableJacketOpeningDia=6;
-cableJacketXOffset=11;
-cableJacketYOffset=22;
-cableJacketZOffset=4;
-cableJacketXAngle=55;
+cableJacketOpeningDia=4.75;
+cableJacketXOffset=insertWidth/2;
+cableJacketYOffset=16;
+cableJacketZOffset=1.5;
+cableJacketXAngle=42;
 cableJacketYAngle=0;
 
 topOpeningOpeningDia=insertWidth-2;
 topOpeningXOffset=insertWidth/2;
-topOpeningYOffset=7;
+topOpeningYOffset=19;
 topOpeningZOffset=-5;
 topOpeningXAngle=-60;
 
