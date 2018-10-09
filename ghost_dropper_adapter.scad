@@ -10,27 +10,28 @@ insertBulgeRadius=5;
 insertBulgeX=0.25; // left and right (relative to the bike seat post)
 insertBulgeY=0.25; // top and bottom (relative to the bike seat post)
 
-cableJacketOpeningDia=4.75;
+cableJacketOpeningDia=5.5;
 cableJacketXOffset=insertWidth/2;
-cableJacketYOffset=16;
+cableJacketYOffset=18.5;
 cableJacketZOffset=1.5;
-cableJacketXAngle=42;
+cableJacketXAngle=47;
 cableJacketYAngle=0;
 
 topOpeningOpeningDia=insertWidth-2;
 topOpeningXOffset=insertWidth/2;
-topOpeningYOffset=19;
+topOpeningYOffset=16;
 topOpeningZOffset=-5;
 topOpeningXAngle=-60;
 
 innerBottomInset=2;  // how much the hole narrows across the bottom (bike-wise)
-innerSideInset=2;
+innerSideInset=2.5;
+innerTopInset=2;
 
 insertCornerRoundnessRadius=3;
 
 $fn=50;
 
-
+// import("ghost_dropper_adapter_proto5.stl");
 //  %bodyCrudeAttempt();
 //  %cube([insertWidth,insertHeight,insertDepth]);  // for reference
 difference() {
@@ -50,23 +51,24 @@ difference() {
 
 module bodyUsingHull() {
     hull() {
-        // corners
-        // inner end of insert (against axes)
+        // corners inner end of insert (against axes)
         // 0,0
         translate([insertCornerRoundnessRadius+innerSideInset,insertCornerRoundnessRadius+innerBottomInset,0])
             cylinder(r=insertCornerRoundnessRadius, h=1);
         // 0,y
-        translate([insertCornerRoundnessRadius,insertHeight-insertCornerRoundnessRadius,0])
+        translate([insertCornerRoundnessRadius+innerSideInset,
+                insertHeight-insertCornerRoundnessRadius-innerTopInset,0])
             cylinder(r=insertCornerRoundnessRadius, h=1);
         // x,0
         translate([insertWidth-insertCornerRoundnessRadius-innerSideInset,
                 insertCornerRoundnessRadius+innerBottomInset,0])
             cylinder(r=insertCornerRoundnessRadius, h=1);
         // x,y
-        translate([insertWidth-insertCornerRoundnessRadius,insertHeight-insertCornerRoundnessRadius,0])
+        translate([insertWidth-insertCornerRoundnessRadius-innerSideInset,
+                insertHeight-insertCornerRoundnessRadius-innerTopInset,0])
             cylinder(r=insertCornerRoundnessRadius, h=1);
 
-        // outer (facing) end of insert (+z / top of drawing)
+        // corners outer (facing) end of insert (+z / top of drawing)
         // 0,0
         translate([insertCornerRoundnessRadius,insertCornerRoundnessRadius,insertDepth-1])
             cylinder(r=insertCornerRoundnessRadius, h=1);
@@ -80,15 +82,14 @@ module bodyUsingHull() {
         translate([insertWidth-insertCornerRoundnessRadius,insertHeight-insertCornerRoundnessRadius,insertDepth-1])
             cylinder(r=insertCornerRoundnessRadius, h=1);
         
-        // bulges
-        // inner end of insert (against axes)
+        // bulges inner end of insert (against axes)
         xCenter=insertWidth/2;
         yCenter=insertHeight/2;
         // x bottom
         translate([xCenter,insertBulgeRadius-insertBulgeY+innerBottomInset,0])
             cylinder(r=insertBulgeRadius, h=1);
         // x top
-        translate([xCenter,insertHeight-insertBulgeRadius+insertBulgeY,0])
+        translate([xCenter,insertHeight-insertBulgeRadius+insertBulgeY-innerTopInset,0])
             cylinder(r=insertBulgeRadius, h=1);
         // y left
         translate([insertBulgeRadius-insertBulgeX+innerSideInset,yCenter,0])
@@ -97,7 +98,7 @@ module bodyUsingHull() {
         translate([insertWidth-insertBulgeRadius-innerSideInset+insertBulgeX,yCenter,0])
             cylinder(r=insertBulgeRadius, h=1);
 
-        // outer (facing) end of insert (+z / top of drawing)
+        // bulges outer (facing) end of insert (+z / top of drawing)
         // x bottom
         translate([xCenter,insertBulgeRadius-insertBulgeY,insertDepth-1])
             cylinder(r=insertBulgeRadius, h=1);
